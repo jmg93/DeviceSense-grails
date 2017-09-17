@@ -6,11 +6,11 @@
 </div>
 
 <div>
-	<label for="desde">Desde</label>
-	<g:field name="desde" type="number" value="${consulta?.desde}" required=""/>
+	<label for="desde">Últimos días</label>
+	<g:field name="desde" type="number" min="1" value="${consulta?.desde}" required=""/>
 </div>
 
-<div>
+<div hidden="true">
 	<label for="hasta">Hasta</label>
-	<g:field name="hasta" type="number" value="${consulta?.hasta}" required=""/>
+	<g:field name="hasta" type="number" value="1" required=""/>
 </div>

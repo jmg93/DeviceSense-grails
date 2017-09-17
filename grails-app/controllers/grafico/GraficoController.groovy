@@ -13,7 +13,7 @@ class GraficoController {
 	def KairosMetricImplService
 	
     def index() { 
-    	//def Consulta consulta
+    	//def consulta = new Consulta()
     	List listaMetricas = KairosMetricImplService.getMetricNames()
     	//consulta.setDesde(200)
     	//consulta.setHasta(1)

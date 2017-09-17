@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<asset:javascript src="jquery-3.2.1.js"/>
+		<asset:javascript src="d3.js"/>
+		<asset:javascript src="d3.min.js"/>
+		<asset:javascript src="jquery-ui.js"/>
 		<style type="text/css">
 			label{
 				display:block;
@@ -64,7 +68,6 @@
 		
 		</style>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'jugador.label', default: 'Jugador')}" />
 		<title>Gráfico</title>
 	</head>
 	<body>
@@ -81,10 +84,7 @@
 
 		<svg width="960" height="500"></svg>
 
-		<asset:javascript src="jquery-3.2.1.js"/>
-		<asset:javascript src="d3.js"/>
-		<asset:javascript src="d3.min.js"/>
-		<asset:stylesheet src="jquery-ui.css"/>
+
 
 		<script type="text/javascript">
 	
@@ -232,5 +232,8 @@
 		
 		
 	</script>
+
+
+
 	</body>
 </html>
