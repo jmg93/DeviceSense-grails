@@ -11,3 +11,4 @@ build/
 .classpath
 bin/
 grails-app/i18n/
+*.log
