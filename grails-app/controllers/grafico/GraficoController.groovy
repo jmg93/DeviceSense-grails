@@ -11,7 +11,8 @@ import grails.converters.JSON
 class GraficoController {
 
 	def KairosMetricImplService
-	
+	static scaffold = usuarios.Usuario
+
     def index() { 
     	//def consulta = new Consulta()
     	List listaMetricas = KairosMetricImplService.getMetricNames()
@@ -34,5 +35,25 @@ class GraficoController {
 	render datos as JSON;
 	
 	
+	}
+
+	def agregarDatosRandom(Consulta consulta) throws URISyntaxException, IOException, InterruptedException{
+		
+		MetricBuilder builder = MetricBuilder.getInstance();
+
+		for(int i=1;i<=10;i++){
+			builder.addMetric("2")
+				.addTag("host", "server1")
+				.addTag("customer", "Acme")
+				.addDataPoint(System.currentTimeMillis(), Math.floor((Math.random()*100))); // 1/1/2017 = 1483228800000 ms
+			Thread.sleep(5);
+		}
+		HttpClient client = new HttpClient("http://localhost:8090");
+		//Response response = client.pushMetrics(builder);
+		client.pushMetrics(builder);
+		client.shutdown();
+		//model.addAttribute("metricNames",metricDao.getMetricNames());
+		//return "welcome";
+		render view:"grafico"
 	}
 }
