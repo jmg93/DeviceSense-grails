@@ -8,5 +8,7 @@ class Usuario {
 	static hasMany = [dashboards: dashboards.Dashboard]
 
     static constraints = {
+    	username blank: false, size: 6..20, unique: true
+    	password blank: false, size: 6..20, password:true 
     }
 }
