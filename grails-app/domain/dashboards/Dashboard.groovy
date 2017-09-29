@@ -2,18 +2,19 @@ package dashboards
 
 class Dashboard {
 
-	String nombre
+	String codigo
 	String descripcion
 	
 	static hasMany = [dispositivos: dispositivos.Dispositivo]
 	static belongsTo = [usuario: usuarios.Usuario] 
 
 	public String toString(){
-		return nombre
+		return codigo
 	}
 
     static constraints = {
-    	nombre unique: true
+    	codigo unique: true
     	descripcion blank:true
+    	dispositivos()
     }
 }

@@ -10,7 +10,3 @@
 	<g:field name="desde" type="number" min="1" value="${consulta?.desde}" required=""/>
 </div>
 
-<div hidden="true">
-	<label for="hasta">Hasta</label>
-	<g:field name="hasta" type="number" value="1" required=""/>
-</div>

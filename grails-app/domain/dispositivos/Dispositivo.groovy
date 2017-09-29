@@ -2,17 +2,18 @@ package dispositivos
 
 class Dispositivo {
 
-	String nombre
+	String codigo
 	String descripcion
 
 	static hasMany = [sensores: dispositivos.Sensor]
 
 	public String toString(){
-		return nombre
+		return codigo
 	}
 
     static constraints = {
-    	nombre unique:true
+    	codigo unique:true
     	descripcion blank:true
+    	sensores()
     }
 }

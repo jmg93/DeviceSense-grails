@@ -2,19 +2,17 @@ package dispositivos
 
 class Sensor {
 
-	String nombre
+	String codigo
 	String descripcion
-	kairosdb.Metrica metrica
 
 	static belongsTo = [dispositivo: dispositivos.Dispositivo]
 
 	public String toString(){
-		return nombre
+		return codigo
 	}
 
     static constraints = {
-    	nombre unique: true
+    	codigo blank:false
     	descripcion blank:true
-    	metrica nullable:true
     }
 }
