@@ -55,7 +55,9 @@
 
 
 			.area {
-			  fill: steelblue;
+			  fill: none;
+			  stroke: steelblue;
+			  stroke-width: 1.2;
 			  clip-path: url(#clip);
 			}
 			
@@ -72,17 +74,19 @@
 	</head>
 	<body>
 		
-			<g:form id="form1" url="[resource:consulta,controller:'Grafico', action:'devuelveDatos']" >
+			<g:form id="form1" url="[controller:'Grafico', action:'devuelveDatos']" >
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="Graficar" />
 				</fieldset>
+
 			</g:form>
 
 
-		<svg width="960" height="500"></svg>
+		<svg width="1200" height="500" align="middle"></svg>
+
 
 
 
@@ -97,11 +101,10 @@
 		        url:  form.attr('action'),
 		        data: form.serialize(),
 		        success: function (kairosData) {
-
 		        	alert("Success");
 			        var svg = d3.select("svg"),
-			            margin = {top: 20, right: 20, bottom: 110, left: 40},
-			            margin2 = {top: 430, right: 20, bottom: 30, left: 40},
+			            margin = {top: 20, right: 20, bottom: 110, left: 100},
+			            margin2 = {top: 430, right: 20, bottom: 30, left: 100},
 			            width = +svg.attr("width") - margin.left - margin.right,
 			            height = +svg.attr("height") - margin.top - margin.bottom,
 			            height2 = +svg.attr("height") - margin2.top - margin2.bottom;
@@ -136,10 +139,17 @@
 			            .x(function(d) { return x2(d.date); })
 			            .y0(height2)
 			            .y1(function(d) { return y2(d.price); });
+
+			        //var g = main.append("svg:g");
+    
+    	// svg.append("circle")
+     //       .attr("cx", function (d) { return x(d.date); } )
+     //       .attr("cy", function (d) { return y(d.price); } )
+     //       .attr("r", 1);
 		
 			        svg.append("defs").append("clipPath")
 			            .attr("id", "clip")
-			          .append("rect")
+			            .append("rect")
 			            .attr("width", width)
 			            .attr("height", height);
 		
@@ -154,12 +164,15 @@
 			        var data = kairosData.map(function(d) {
 			        		return {
 			                     date: new Date(d.timestamp),
-			                     price: d.value
+			                     price: Number(d.value)/1000000
 			                  };
 		                  });
+
+			        console.log(kairosData);
+			        console.log(data);
 		        
 					x.domain(d3.extent(data, function(d) { return d.date; }));
-					y.domain([0, d3.max(data, function(d) { return d.price; })]);
+					y.domain([0, d3.max(data, function(d) { return d.price*1.2; })]);
 					x2.domain(x.domain());
 					y2.domain(y.domain());
 					
@@ -219,7 +232,6 @@
 						focus.select(".axis--x").call(xAxis);
 						context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
 					}
-
 		        },
 		        error: function (e) {
 					alert("error");
@@ -232,6 +244,8 @@
 		
 		
 	</script>
+
+
 
 
 

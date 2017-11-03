@@ -2,8 +2,8 @@ package dispositivos
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import kairosdb.Metrica
-import kairosdb.MetricaService
+//import influxdb.Metrica
+//import influxdb.MetricaService
 
 @Transactional(readOnly = true)
 class SensorController {
@@ -39,11 +39,11 @@ class SensorController {
             return
         }
 
-        def codigoMetrica = "$sensor.dispositivo.codigo-$sensor.codigo"
+/*        def codigoMetrica = "$sensor.dispositivo.codigo-$sensor.codigo"
         def metricaInstance = new Metrica(codigo:codigoMetrica)
         MetricaService.crearMetricaKairos(metricaInstance)
         MetricaService.agregarDatosRandom(metricaInstance)
-        metricaInstance.save(flush:true)
+        metricaInstance.save(flush:true)*/
 
         sensor.save flush:true
 

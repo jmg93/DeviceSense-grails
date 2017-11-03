@@ -1,43 +1,39 @@
 package grafico
 
-import org.kairosdb.client.HttpClient;
-import org.kairosdb.client.builder.*;
-import org.kairosdb.client.response.*;
-import dao.MetricDaoService;
-import dao.KairosMetricImplService
-import kairosdb.Consulta
+import com.db.influxdb.*;
+import influxdb.MetricaService
+import influxdb.Consulta
 import grails.converters.JSON
+import org.json.simple.JSONObject
+import java.util.ArrayList
+
 
 class GraficoController {
 
-	def KairosMetricImplService
-	static scaffold = usuarios.Usuario
+	def MetricaService
+	static scaffold = usuarios.Usuario		//Esto por que estaba aca??
 
     def index() { 
-    	//def consulta = new Consulta()
-    	List listaMetricas = KairosMetricImplService.getMetricNames()
-    	//consulta.setDesde(200)
-    	//consulta.setHasta(1)
-    	render view:"grafico", model:[listaMetricas: listaMetricas]
+
+    	def consulta = new Consulta()
+    	def listaMetricas = MetricaService.listaMetricas()
+    	consulta.setDesde(3)
+    	consulta.setTipoQuery(1)
+    	render view:"grafico", model:[consulta: consulta,listaMetricas: listaMetricas]
     }
 
-	def devuelveDatos(Consulta consulta) throws URISyntaxException, IOException{
-	
-	QueryBuilder builder = QueryBuilder.getInstance();
-	builder.addMetric(consulta.getMetrica());					
-	builder.setStart(consulta.getDesde(), TimeUnit.DAYS);
-	HttpClient client = null;
-	client = new HttpClient("http://localhost:8090");
-	QueryResponse queryResponse;	
-	queryResponse = client.query(builder);
-	client.shutdown();
-	List datos = ((queryResponse.getQueries()).get(0)).getResults().get(0).getDataPoints();
-	render datos as JSON;
-	
-	
-	}
+    def devuelveDatos(Consulta consulta) throws URISyntaxException, IOException{
 
-	def agregarDatosRandom(Consulta consulta) throws URISyntaxException, IOException, InterruptedException{
+    	def datos = MetricaService.consultarDatos(consulta)
+ 		def datosJSON = MetricaService.armarJSON(datos)
+    	System.out.println(datosJSON)
+    	System.out.println(consulta.getTipoQuery())
+    	render datosJSON as JSON
+
+    }
+
+
+/*	def agregarDatosRandom(Consulta consulta) throws URISyntaxException, IOException, InterruptedException{
 		
 		MetricBuilder builder = MetricBuilder.getInstance();
 
@@ -56,4 +52,6 @@ class GraficoController {
 		//return "welcome";
 		render view:"grafico"
 	}
+*/
 }
+
